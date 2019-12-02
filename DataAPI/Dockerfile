@@ -2,6 +2,8 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-buster-slim AS base
 WORKDIR /app
 EXPOSE 80
 
+ENV ConnectionStrings__MagsConnectionMssql="Server=ENVSRV;Initial Catalog=DP0419Mags;Persist Security Info=False;User ID=ENVID;Password=ENVPW;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
 WORKDIR /src
 COPY ["DataAPI/DataAPI.csproj", "DataAPI/"]

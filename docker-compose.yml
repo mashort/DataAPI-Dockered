@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  dataapi:
+    image: ${DOCKER_REGISTRY-}dataapi
+    build:
+      context: .
+      dockerfile: DataAPI/Dockerfile
+    environment:
+      - DB_Server
+      - DB_UserId
+      - DB_PW

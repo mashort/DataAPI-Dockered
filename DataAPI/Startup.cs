@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using DataAPI.Models;
+using System.Text;
 
 namespace DataAPI
 {
@@ -28,9 +29,16 @@ namespace DataAPI
         {
             services.AddControllers();
 
+            var config = new StringBuilder (Configuration["ConnectionStrings:MagsConnectionMssql"]);
+            string conn = config.Replace("ENVSRV", Configuration["DB_Server"])
+                                .Replace("ENVID", Configuration["DB_UserId"])
+                                .Replace("ENVPW", Configuration["DB_PW"])
+                                .ToString();
+
             services.AddDbContext<MagContext>(options =>
                 //options.UseSqlServer(Configuration.GetConnectionString("MagsConnectionMssql")));
-                options.UseSqlite(Configuration.GetConnectionString("MagsConnectionSqlite")));
+                //options.UseSqlite(Configuration.GetConnectionString("MagsConnectionSqlite")));
+                options.UseSqlServer(conn));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
