@@ -20,16 +20,15 @@ In Visual Studio (2019):
   - A connection string to SQL Server LocalDB, called *MagsConnectionMssql*, exists in appsettings.Development.json. ASP.NET Core will default to this file when running in Visual Studio.
 - To be able to read both appsettings.Development.json connection string at design time and the environment variable provided by Dockerfile at run time, the following syntax needs to be used:
   - In **Startup.cs**
-  ```csharp
-services.AddDbContext<MagContext>(options =>
-  options.UseSqlServer(
-    Configuration["ConnectionStrings:MagsConnectionMssql"])); 
-  ```
+```csharp
+services.AddDbContext<MagContext>(options => 
+  options.UseSqlServer(Configuration["ConnectionStrings:MagsConnectionMssql"]));
+```
   - In **Dockerfile**
-  ```
-ENV ConnectionStrings__MagsConnectionMssql="Server=...”
-  ```
-    - **Note that a double-underscore is used here as the key/value delimiter - see [Key-per-file Configuration Provider](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?tabs=basicconfiguration&view=aspnetcore-2.2#key-per-file-configuration-provider)**
+```
+ENV ConnectionStrings__MagsConnectionMssql="Server=..."
+```
+**Note that a double-underscore is used here as the key/value delimiter - see [Key-per-file Configuration Provider](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?tabs=basicconfiguration&view=aspnetcore-2.2#key-per-file-configuration-provider)**
 - Placeholders for secrets are used in the connection string environment variable in the **Dockerfile**...
 ```
 ENV ConnectionStrings__MagsConnectionMssql="Server=ENSRV; ...”
